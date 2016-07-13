@@ -1,10 +1,11 @@
-<li><%= link_to "Posts", posts_path %></li>
-<li><%= link_to "Contact", contact_path %></li>
 <% if !user_signed_in? %>
 <li><%= link_to "Sign in", new_user_session_path %></li>
 <li><%= link_to "Sign up", new_user_registration_path %></li>
 <% else %>
-<li><%= link_to "Protected Page", inside_path %></li>
+<li><%= link_to "Наименования", items_path %></li>
+<li><%= link_to "Транзакции",   transactions_path %></li>
+<li><%= link_to "Categories",   categories_path %></li>
+<li><%= link_to "places", targets_path %></li>
 <li><%= link_to "Edit your account", edit_user_registration_path %></li>
 
 <% if current_user.admin? %>

@@ -1,0 +1,60 @@
+---
+ru:
+  destroy: Удалить
+  edit: Ред.
+  hello: Hello world
+  helpers:
+    actions: Actions
+    links:
+      back: Назад
+      cancel: Отмена
+      confirm: Подтвердить
+      destroy: Удалить
+      edit: Ред.
+      new: Добавить
+      show: Смотреть
+  items:
+    edit:
+      title: Редактирование  
+    form:
+      cancel: Отмена
+    index:
+      actions: Actions
+      confirm: Подтвердить
+      new: Добавить
+      title: Инвентарь
+    new:
+      title: Новая позиция
+    show:
+      back: Назад
+      confirm: Подтвердить
+      destroy: Удалить
+      edit: Ред.
+      title: 
+  show: Открыть
+  targets:
+    show:
+      back: Назад
+      confirm: Подтвердить
+      destroy: Удалить
+      edit: Ред.
+      title: Пункт назначения
+  transactions:
+    edit:
+      title: Форма для транзакции
+    form:
+      cancel: Отмена
+    index:
+      actions: Действия
+      confirm: Подтвердить
+      new: Добавить
+      show: Детальней
+      title: Транзакции
+    new:
+      title: Новая транзакция
+    show:
+      back: Вернуться
+      confirm: Подтвердить
+      destroy: Удалить
+      edit: Ред.
+      title: Инфо о транзакции

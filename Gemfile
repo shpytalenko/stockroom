@@ -22,13 +22,20 @@ gem 'friendly_id', '5.1.0'
 
 # Font-awesome: https://github.com/FortAwesome/font-awesome-sass
 gem 'font-awesome-sass', '4.4.0'
-
+gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'simple_form'
+gem 'ransack', github: 'activerecord-hackery/ransack'
+gem 'ransack_simple_form'
+gem 'devise-i18n'
+gem 'i18n-tasks', '~> 0.9.5'
+#:w
+#gem 'globalize'
 # RailsBricks: http://www.railsbricks.net
-gem 'railsbricks'
+#gem 'railsbricks'
 
 # Bootstrap 3: https://github.com/twbs/bootstrap-sass
 gem 'bootstrap-sass', '3.3.5.1'
-
+gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'rails-4-x'
 group :development, :test do
   gem 'byebug', '6.0.2'
   gem 'web-console', '2.2.1'
@@ -41,6 +48,7 @@ group :development, :test do
 
   # Annotate_Models: https://github.com/ctran/annotate_models
   gem 'annotate', '2.6.10'
+  gem 'therubyracer'
 end
 
 

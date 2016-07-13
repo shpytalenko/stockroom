@@ -1,0 +1,16 @@
+<%= simple_form_for @transaction, :html => { :class => 'form-horizontal col-md-4' } do |f| %>
+  <%= f.association :item %>
+  <%= f.error_span( :item_id ) %>
+  <%= f.input :action_type, collection: [ "In", "Out"] %>
+  <%= f.error_span(:action_type) %>
+  <%= f.input :amount %>
+  <%= f.error_span(:amount) %>
+  <%= f.association :target %>
+  <%= f.error_span(:target_id) %>
+  <%= f.input :notes %>
+  <%= f.error_span(:notes) %>
+
+  <%= f.button :submit, :class => 'btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                transactions_path, :class => 'btn btn-default' %>
+<% end %>

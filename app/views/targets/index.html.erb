@@ -1,0 +1,35 @@
+<%- model_class = Target -%>
+<div class="page-header">
+  <h3>Пункты назначения</h3>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Название</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @targets.each do |target| %>
+      <tr>
+        <td><%= link_to target.name, target_path(target) %></td>
+        <td><%=l target.created_at  %></td>
+        <td>
+          <%= link_to "Детальней",
+                      target_path(target), :class => 'btn btn-default btn-xs' %>
+          <%= link_to "Ред.",
+                      edit_target_path(target), :class => 'btn btn-default btn-xs' %>
+          <%= link_to "Удалить",
+                      target_path(target),
+                      :method => :delete,
+                      :data => { :confirm => "Уверены что хотите удалить ?" },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Создать еще",
+            new_target_path,
+            :class => 'btn btn-primary' %>
