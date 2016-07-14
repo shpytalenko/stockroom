@@ -19,6 +19,8 @@ class ItemsController < ApplicationController
   # GET /items/new
   def new
     @item = Item.new
+    @category = Category.find(params[:category_id]) 
+    @item.category = @category 
   end
 
   # GET /items/1/edit

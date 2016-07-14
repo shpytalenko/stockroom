@@ -1,17 +1,18 @@
+
 <%= simple_form_for @item, :html => { :class => 'form-horizontal' } do |f| %>
-  <%= f.input :name %>
-  <%= f.error_span(:name) %>
+  <%= f.input :name , :label =>"Название"%>
+  <%= f.error_span(:name)%>
   
-  <%= f.association :category %>
+  <%= f.association :category, :label =>"Категория"%>
   <%= f.error_span(:category) %>
   <%#= f.input :sku %>
   <%#= f.error_span(:sku) %>
-  <%= f.input :description %>
+  <%= f.input :description, :label =>"Описание" %>
   <%= f.error_span(:description) %>
-  <%= f.input :price %>
+  <%= f.input :price, :label =>"Цена" %>
   <%= f.error_span(:price) %>
-  <%= f.input :amount %>
-  <%= f.error_span(:amount) %>
+  <%= f.input :amount , :label =>"Количество"%>
+  <%= f.error_span(:amount)%>
 
   <%= f.button :submit, :class => 'btn-primary' %>
   <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

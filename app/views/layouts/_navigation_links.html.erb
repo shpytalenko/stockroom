@@ -4,9 +4,8 @@
 <% else %>
 <li><%= link_to "Наименования", items_path %></li>
 <li><%= link_to "Транзакции",   transactions_path %></li>
-<li><%= link_to "Categories",   categories_path %></li>
-<li><%= link_to "places", targets_path %></li>
-<li><%= link_to "Edit your account", edit_user_registration_path %></li>
+<li><%= link_to "Пункты назначения", targets_path %></li>
+<li><%= link_to "Редактировать профайл", edit_user_registration_path %></li>
 
 <% if current_user.admin? %>
 <li><%= link_to "Admin", admin_root_path %></li>
