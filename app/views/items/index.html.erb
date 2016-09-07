@@ -2,7 +2,25 @@
 <div class="page-header">
   <h3><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h3>
 </div>
-<div class="col-md-8">
+
+<div class="col-md-12">
+ <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">Поиск инвентаря</div>
+        <div class="panel-body">
+         <%= ransack_simple_form_for @q , :html => { :class => 'form-vertical ' } do |f| %>
+              <%= f.input  :category_id_eq ,:collection => Category.all, :label_method => :name, :value_method => :id, :label => "Категория" ,:include_blank => true %>
+              <%= f.input  :name_eq  , :label => "Наименование" ,:include_blank => true %>
+              <%= f.input  :sku_cont  , :label => "SKU" ,:include_blank => true %>
+              <%= f.button :submit, "Поиск", :class => 'btn-primary btn-block' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="col-md-12">
   <h4 class="text-info"><%= @category.name rescue ''%></h4>
   <table class="table table-striped">
     <thead>
@@ -51,21 +69,7 @@
  
  
  
-  <div class="col-md-4">
-    <div class="panel panel-default">
-      <div class="panel-heading">Поиск инвентаря</div>
-        <div class="panel-body">
-         <%= ransack_simple_form_for @q , :html => { :class => 'form-vertical ' } do |f| %>
-              <%= f.input  :category_id_eq ,:collection => Category.all, :label_method => :name, :value_method => :id, :label => "Категория" ,:include_blank => true %>
-              <%= f.input  :name_eq  , :label => "Наименование" ,:include_blank => true %>
-              <%= f.input  :sku_cont  , :label => "SKU" ,:include_blank => true %>
-              <%= f.button :submit, "Поиск", :class => 'btn-primary btn-block' %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-  </div>
-
+ 
 
           
           
