@@ -5,9 +5,10 @@ class ItemsController < ApplicationController
   # GET /items.json
   def index
    
-    @category = Category.find(params[:category_id]) rescue Category.first
+    @q = Item.ransack(params[:q])
+    @items = @q.result
+    
     #@items = Item.all
-    @items = @category.items
   
   end
 

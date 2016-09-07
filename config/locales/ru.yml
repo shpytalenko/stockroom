@@ -3,6 +3,7 @@ ru:
   destroy: Удалить
   edit: Ред.
   hello: Hello world
+  category: Категория
   helpers:
     actions: Actions
     links:
@@ -32,6 +33,13 @@ ru:
       edit: Ред.
       title: 
   show: Открыть
+  categories:
+    show:
+      back: Назад
+      confirm: Подтвердить
+      destroy: Удалить
+      edit: Ред.
+      title: Категория
   targets:
     show:
       back: Назад

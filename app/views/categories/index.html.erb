@@ -1,15 +1,14 @@
 <%- model_class = Category -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h3> Категории </h3>
 </div>
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:name) %></th>
-      <th><%= model_class.human_attribute_name(:description) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th># </th>
+      <th>Назв. </th>
+      <th>Описание </th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -18,7 +17,6 @@
         <td><%= link_to category.id, category_path(category) %></td>
         <td><%= category.name %></td>
         <td><%= category.description %></td>
-        <td><%=l category.created_at %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       category_path(category), :class => 'btn btn-default btn-xs' %>

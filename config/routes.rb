@@ -3,7 +3,7 @@ Stockroom::Application.routes.draw do
   resources :targets
   resources :transactions
   resources :items
-  root "pages#home"
+  root "items#index"
   get "home", to: "pages#home", as: "home"
   get "inside", to: "pages#inside", as: "inside"
   get "/contact", to: "pages#contact", as: "contact"
