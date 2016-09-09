@@ -1,5 +1,5 @@
 
-<%= simple_form_for @item, :html => { :class => 'form-horizontal' } do |f| %>
+<%= simple_form_for @item, :html => { :class => 'form-horizontal col-md-offset-3 col-md-6' } do |f| %>
   <%= f.input :name , :label =>"Название"%>
   <%= f.error_span(:name)%>
   
@@ -9,6 +9,10 @@
   <%#= f.error_span(:sku) %>
   <%= f.input :description, :label =>"Описание" %>
   <%= f.error_span(:description) %>
+  <%= f.input :red_line, :label =>"Минимальный остаток" %>
+  <%= f.error_span(:red_line) %>
+  <%= f.input :unit_type, :label =>"Ед. Измерения" %>
+  <%= f.error_span(:unit_type) %>
   <%= f.input :price, :label =>"Цена" %>
   <%= f.error_span(:price) %>
   <%= f.input :amount , :label =>"Количество"%>

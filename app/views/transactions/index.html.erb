@@ -1,10 +1,10 @@
 <%- model_class = Transaction -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+  <h3><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h3>
 </div>
 
 <div class="col-md-8">
-<table class="table table-striped">
+<table class="table table-striped table-hover">
   <thead>
     <tr>
       <th>#</th>
@@ -12,7 +12,7 @@
       <th>Тип тр-и</th>
       <th>Количество</th>
       <th>Станция</th>
-      <th>Дата %></th>
+      <th>Дата </th>
       <th></th>
     </tr>
   </thead>
@@ -21,10 +21,25 @@
       <tr>
         <td><%= link_to transaction.id, transaction_path(transaction) %></td>
         <td><%= link_to transaction.item.name, transaction_path(transaction) %></td>
-        <td><%= transaction.action_type %></td>
-        <td><%= transaction.amount %></td>
-        <td><%= transaction.target.name rescue '' %></td>
+        <% if transaction.action_type == "In" %>
+          <td><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></td>
+          <td><%= transaction.amount %></td>
+          <td><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
+        <% else %>
+          <td><span class="glyphicon glyphicon-export" aria-hidden="true"></span></td>
+          <td><%= transaction.amount %></td>
+          <td><%= transaction.target.name  %></td>
+        
+        <% end %>
+        
+        
+        
+        
+        
         <td><%= transaction.created_at.strftime("%d/%m/%Y") rescue '-' %></td>
+        
+        
+        
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       transaction_path(transaction), :class => 'btn btn-default btn-xs' %>

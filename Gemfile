@@ -39,7 +39,7 @@ gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'rails-4-x'
 group :development, :test do
   gem 'byebug', '6.0.2'
   gem 'web-console', '2.2.1'
-
+  gem 'pry'
   # Figaro: https://github.com/laserlemon/figaro
   gem 'figaro', '1.1.1'
 
@@ -59,6 +59,6 @@ end
 
 # Devise: https://github.com/plataformatec/devise
 gem 'devise', '3.5.2'
-
+gem 'thin'
 # Redcarpet: https://github.com/vmg/redcarpet
 gem 'redcarpet', '3.3.2'
