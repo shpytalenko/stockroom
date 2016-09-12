@@ -1,0 +1,10 @@
+<div class="">
+           
+           <div class="list-group">
+             <% Category.find_each do |category| %>
+               <a href="<%= items_path(:category_id => category.id) %>" class="list-group-item "><%= category.name %>  <span class="badge"> <%=category.items_count %> </span> </a>
+            <% end %>
+           </div>
+           <%= link_to 'Редактировать', categories_path %>
+           <hr/>
+

@@ -3,49 +3,52 @@
   <h3><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h3>
 </div>
 
-<div class="col-md-8">
+<div class="col-md-12">
 <table class="table table-striped table-hover">
   <thead>
     <tr>
-      <th>#</th>
+      <th>Категория</th>
       <th>Позиция</th>
-      <th>Тип тр-и</th>
-      <th>Количество</th>
+      <th>Тип</th>
       <th>Станция</th>
+      <th>Опер.</th>
       <th>Дата </th>
+      <th>N</th>
+      <th>Стоимость</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <% @transactions.each do |transaction| %>
       <tr>
-        <td><%= link_to transaction.id, transaction_path(transaction) %></td>
-        <td><%= link_to transaction.item.name, transaction_path(transaction) %></td>
+        
+        <td><%= link_to transaction.item.category.name, category_path(transaction.item.category) %></td>
+        <td><%= link_to transaction.item.name, item_path(transaction.item) %></td>
         <% if transaction.action_type == "In" %>
           <td><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></td>
-          <td><%= transaction.amount %></td>
           <td><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
         <% else %>
           <td><span class="glyphicon glyphicon-export" aria-hidden="true"></span></td>
-          <td><%= transaction.amount %></td>
           <td><%= transaction.target.name  %></td>
         
         <% end %>
         
         
         
-        
+        <td><%=  transaction.user.email rescue '-'  %> </td>
         
         <td><%= transaction.created_at.strftime("%d/%m/%Y") rescue '-' %></td>
         
+        <td><%= transaction.amount %> <%= transaction.item.unit_type%> x <%= transaction.item.price%> </td>
+        <td class="info" > <strong><%= transaction.amount*transaction.item.price  %> грн.</strong></td>
         
         
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       transaction_path(transaction), :class => 'btn btn-default btn-xs' %>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+          <%#= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_transaction_path(transaction), :class => 'btn btn-default btn-xs' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+          <%#= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       transaction_path(transaction),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
@@ -56,16 +59,22 @@
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")),
+<%#= link_to t('.new', :default => t("helpers.links.new")),
             new_transaction_path,
             :class => 'btn btn-primary' %>
   </div>
-  <div class="col-md-4">
+ 
+ 
+<% content_for :sidebar do %>
+ 
+  <div class="col-sm-12">
   <div class="panel panel-default">
     <div class="panel-heading">Поиск по транзакциям</div>
     <div class="panel-body">
          <%= ransack_simple_form_for @q , :html => { :class => 'form-vertical ' } do |f| %>
            <%= f.input  :target_id_eq ,:collection => Target.all, :label_method => :name, :value_method => :id, :label => "Станция" ,:include_blank => true %>
+           <%= f.input  :item_category_id_eq ,:collection => Category.all, :label_method => :name, :value_method => :id, :label => "Категория" ,:include_blank => true %>
+           <%= f.input  :user_id_eq ,:collection => User.all, :label_method => :email, :value_method => :id, :label => "Оператор" ,:include_blank => true %>
            <%#= f.input  :item_name_eq ,:collection => Account::CARD_TYPES,  :label => "Тип карты" ,:include_blank => true %>
            <%= f.input  :action_type_eq ,   :collection => ['In','Out'],  :label => "Тип Транзакции" ,:include_blank => true %>
            <h5><strong class="text-info">Транзакции созданы в период:</strong></h5> 
@@ -89,4 +98,5 @@
   </div>
   
   
-  </div>
+</div>
+<% end %>

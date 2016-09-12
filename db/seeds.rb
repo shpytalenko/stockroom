@@ -7,5 +7,5 @@ u = User.new(
     password: "1234",
     admin: true
 )
-u.skip_confirmation!
+#u.skip_confirmation!
 u.save!

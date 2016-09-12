@@ -10,7 +10,7 @@ gem 'jquery-rails', '4.0.4'
 gem 'turbolinks', '2.5.3'
 gem 'jbuilder', '2.3.1'
 gem 'bcrypt', '3.1.10'
-
+gem 'counter_culture', '~> 0.1.33'
 # Necessary for Windows OS (won't install on *nix systems)
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
@@ -28,6 +28,8 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'ransack_simple_form'
 gem 'devise-i18n'
 gem 'i18n-tasks', '~> 0.9.5'
+gem 'populator'
+gem 'faker'
 #:w
 #gem 'globalize'
 # RailsBricks: http://www.railsbricks.net

@@ -6,6 +6,9 @@ class ItemsController < ApplicationController
   def index
    
     @q = Item.ransack(params[:q])
+    if params[:category_id] 
+      @q.category_id_eq = params[:category_id]
+    end
     @items = @q.result
     
     #@items = Item.all
@@ -35,6 +38,8 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       if @item.save
+        Transaction.create(
+          :item_id => @item.id, :action_type => "In", :user_id => current_user.id, :amount => @item.amount)
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
         format.json { render :show, status: :created, location: @item }
       else

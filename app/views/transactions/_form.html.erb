@@ -1,6 +1,8 @@
 <%= simple_form_for @transaction, :html => { :class => 'form-horizontal col-md-4' } do |f| %>
   <%= f.association :item, :label => "Позиция" %>
   <%= f.error_span( :item_id ) %>
+  <%= f.association :user, as: :hidden, input_html: { value: current_user.id } %>
+  <%= f.error_span( :user_id ) %>
   <%= f.input :action_type, collection: [ "In", "Out"] , :label => "Поступление или Выдача "%>
   <%= f.error_span(:action_type) %>
   <%= f.input :amount , :label => "Количетсво"%>

@@ -1,34 +1,42 @@
 <%- model_class = Item -%>
+<% content_for :sidebar do %>
+   <%= render "layouts/items_form_search" %>
+<% end %>
 
-
-<div class="col-md-9">
+<div class="col-md-12">
   <h4 class="text-info"><%= @category.name rescue ''%></h4>
-  <table class="table table-striped">
+  <table class="table table-striped  table-hover">
     <thead>
       <tr>
+        <th>Категория</th>
         <th>Название</th>
         <th>Описание</th>
-        <th>Цена</th>
-        <th>К-во</th>
+        <th>$</th>
+        <th>N</th>
+        <th></th>
+        <th>Total</th>
         <th>Действия</th>
       </tr>
     </thead>
     <tbody>
       <% @items.each do |item| %>
         <tr>
-          <td><%= link_to truncate("  #{item.name}", length: 17, separator: ' ') , item_path(item) %></td>
+          <td><strong><%= link_to truncate("  #{item.category.name}", length: 27, separator: ' ') , item_path(item) %></td></strong>
+          <td><strong><%= link_to truncate("  #{item.name}", length: 17, separator: ' ') , item_path(item) %></td></strong>
           <td><%= truncate("  #{item.description}", length: 17, separator: ' ')  %></td>
-          <td><%= item.price %></td>
+          <td><%= item.price %> грн  </td>
           <td>
             <% if item.amount < item.red_line %>
-              <span class="label label-danger"> <%= item.amount %></span>
+              <span class="label label-danger"> <%= item.amount %></span> <%= item.unit_type %>
             <% else %>
-            
-              <%= item.amount %>
+              <%= item.amount %> <%= item.unit_type %>
             <% end %>
-            </td>
+          </td>
+          
+          <td>  </td>
+          <td class="info" ><strong><%= item.total %>  грн. </strong> </td>
           <td>
-            <%= link_to  'Получить',
+          <%= link_to  'Получить',
               new_transaction_path(:item_id=> item), :class => 'btn btn-default btn-xs' %>
             <%= link_to  'Выдать',
                         new_transaction_path(:item_id=> item), :class => 'btn btn-default btn-xs' %>
@@ -52,20 +60,7 @@
             :class => 'btn btn-primary' %>
 </div>
   
-  <div class="col-md-3">
-    <div class="panel panel-default">
-      <div class="panel-heading">Поиск инвентаря</div>
-        <div class="panel-body">
-         <%= ransack_simple_form_for @q , :html => { :class => 'form-vertical ' } do |f| %>
-              <%= f.input  :category_id_eq ,:collection => Category.all, :label_method => :name, :value_method => :id, :label => "Категория" ,:include_blank => true %>
-              <%= f.input  :name_eq  , :label => "Наименование" ,:include_blank => true %>
-              <%= f.input  :sku_cont  , :label => "SKU" ,:include_blank => true %>
-              <%= f.button :submit, "Поиск", :class => 'btn-primary btn-block' %>
-          <% end %>
-        </div>
-      </div>
-    </div>
-        
+       
  
  
  
