@@ -37,9 +37,9 @@
           <td class="info" ><strong><%= item.total %>  грн. </strong> </td>
           <td>
           <%= link_to  'Получить',
-              new_transaction_path(:item_id=> item), :class => 'btn btn-default btn-xs' %>
+            new_transaction_path(:item_id=> item, :action_type => "In"), :class => 'btn btn-default btn-xs' %>
             <%= link_to  'Выдать',
-                        new_transaction_path(:item_id=> item), :class => 'btn btn-default btn-xs' %>
+              new_transaction_path(:item_id=> item, :action_type => "Out"), :class => 'btn btn-default btn-xs' %>
             <%#= link_to t('show', :default => t("helpers.links.show")),
                         item_path(item), :class => 'btn btn-default btn-xs' %>
             <%#= link_to t('edit', :default => t("helpers.links.edit")),

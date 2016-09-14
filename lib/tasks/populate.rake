@@ -29,8 +29,39 @@ namespace :db do
      puts " - #{category.name}"
     end
     
-    
-
+   
   
+  end
+
+
+
+  desc "Erase and fill database"
+  task :fake => :environment do
+  
+    [Item, Transaction].each(&:delete_all)
+  #require 'populator'
+  require 'faker'
+  #binding.pry 
+  Category.all[0..10].each do |category|
+    3.times do |k|
+         item = Item.new   
+         #item.name = "Product #{rand(0..10000)}"
+         item.name = Faker::Commerce.product_name
+         item.sku = Faker::Code.asin 
+         item.description = "short description" 
+         item.price = Faker::Commerce.price 
+         item.amount = Faker::Number.between(1, 100)
+         item.red_line = Faker::Number.between(10, 20)
+         item.unit_type = ' p.'
+         item.save  
+         category.items << item
+         item.save
+         item.transactions.create(
+              :item_id => item.id, :action_type => "In", :user_id => User.first.id, :amount => item.amount)
+         
+         item.transactions.create(
+              :item_id => item.id, :target_id => Target.first.id, :action_type => "Out", :user_id => User.first.id, :amount => rand(item.amount))
+    end
+  end
   end
 end

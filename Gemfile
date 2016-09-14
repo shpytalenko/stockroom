@@ -30,6 +30,7 @@ gem 'devise-i18n'
 gem 'i18n-tasks', '~> 0.9.5'
 gem 'populator'
 gem 'faker'
+gem 'bootstrap-kaminari-views'
 #:w
 #gem 'globalize'
 # RailsBricks: http://www.railsbricks.net

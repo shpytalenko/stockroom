@@ -4,8 +4,34 @@ class TransactionsController < ApplicationController
   # GET /transactions
   # GET /transactions.json
   def index
+   # @q = Transaction.ransack(params[:q])
+   # @transactions = @q.result.page(params[:page])
+   # @total_count
+  
+    params[:q] ||= {}
+    if params[:q][:created_at_lteq].present?
+      params[:q][:created_at_lteq] = params[:q][:created_at_lteq].to_date.end_of_day
+    end
+    if params[:q][:created_at_gteq].present?
+      params[:q][:created_at_gteq] = params[:q][:created_at_gteq].to_date.beginning_of_day
+    end  
     @q = Transaction.ransack(params[:q])
-    @transactions = @q.result
+      @transactions  = @q.result
+      @total_plus = 0
+      @total_minus = 0
+      @total_transactions = 0 
+      @transactions.find_each do |t|
+         @total_transactions += 1 
+         case t.action_type
+          when "In"
+           @total_plus += t.amount.to_i    
+          when "Out"
+           @total_minus += t.amount.to_i    
+          end
+      end  
+         @transactions = @transactions.page(params[:page])
+  
+  
   end
 
   # GET /transactions/1
@@ -15,7 +41,7 @@ class TransactionsController < ApplicationController
 
   # GET /transactions/new
   def new
-    @transaction = Transaction.new(:item_id => params[:item_id])
+    @transaction = Transaction.new(:item_id => params[:item_id], :action_type => params[:action_type])
     
   end
 

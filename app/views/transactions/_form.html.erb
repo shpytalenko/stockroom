@@ -1,13 +1,15 @@
 <%= simple_form_for @transaction, :html => { :class => 'form-horizontal col-md-4' } do |f| %>
-  <%= f.association :item, :label => "Позиция" %>
+  <%= f.association :item, :label => "Позиция" , required: true %>
   <%= f.error_span( :item_id ) %>
   <%= f.association :user, as: :hidden, input_html: { value: current_user.id } %>
   <%= f.error_span( :user_id ) %>
   <%= f.input :action_type, collection: [ "In", "Out"] , :label => "Поступление или Выдача "%>
   <%= f.error_span(:action_type) %>
-  <%= f.input :amount , :label => "Количетсво"%>
+  <%= f.input :amount , :label => "Количетсво" , required: true%>
   <%= f.error_span(:amount) %>
-  <%= f.association :target , :label => "Пункт назначения (Станция №1, ... )"%>
+  <% if @transaction.action_type == "Out"%> 
+    <%= f.association :target , :label => "Пункт назначения (Станция №1, ... )"%>
+  <% end %>
   <%= f.error_span(:target_id) %>
   <%= f.input :notes , :label => "Заметки"%>
   <%= f.error_span(:notes) %>
