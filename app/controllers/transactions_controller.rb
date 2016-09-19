@@ -17,20 +17,10 @@ class TransactionsController < ApplicationController
     end  
     @q = Transaction.ransack(params[:q])
       @transactions  = @q.result
-      @total_plus = 0
-      @total_minus = 0
-      @total_transactions = 0 
-      @transactions.find_each do |t|
-         @total_transactions += 1 
-         case t.action_type
-          when "In"
-           @total_plus += t.amount.to_i    
-          when "Out"
-           @total_minus += t.amount.to_i    
-          end
-      end  
-         @transactions = @transactions.page(params[:page])
-  
+      count_total_plus_and_minus(@transactions)
+      count_target(@transactions)
+      @transactions = @transactions.page(params[:page])
+    
   
   end
 
@@ -97,6 +87,37 @@ class TransactionsController < ApplicationController
   end
 
   private
+    
+    
+  def count_target(transactions)
+    @targets ={}  
+    Target.find_each do |target|
+        total = 0 
+        total = transactions.where(:target_id => target.id, :action_type => "Out").sum(:amount)
+        @targets[target.id] = total
+    end  
+    @max_target= @targets.max_by{ |k,v| v }[1]
+    @targets
+  end
+
+  
+    def count_total_plus_and_minus(transactions)
+      @total_plus = 0
+      @total_by_target = 0
+      @total_minus = 0
+      @total_transactions = 0 
+      transactions.find_each do |t|
+         @total_transactions += 1 
+         case t.action_type
+          when "In"
+           @total_plus += t.amount.to_i    
+          when "Out"
+           @total_minus += t.amount.to_i    
+           #:@total_by_target += t.amount.to_i if t.
+          end
+      end  
+
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction
       @transaction = Transaction.find(params[:id])

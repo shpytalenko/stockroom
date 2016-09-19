@@ -21,12 +21,12 @@ namespace :db do
     end
     
     category_list.each do |category_name|
-      Category.create(:name => category_name)
+      Category.create(:name => category_name, :user_id => User.order("RANDOM()").first.id )
     end
 
     puts "------> Новые категори успешно добавлены:"
     Category.find_each do |category|
-     puts " - #{category.name}"
+     puts " - #{category.name} #{category.user.email}"
     end
     
    
@@ -57,10 +57,10 @@ namespace :db do
          category.items << item
          item.save
          item.transactions.create(
-              :item_id => item.id, :action_type => "In", :user_id => User.first.id, :amount => item.amount)
+              :item_id => item.id, :action_type => "In", :user_id => item.category.user_id, :amount => item.amount)
          
          item.transactions.create(
-              :item_id => item.id, :target_id => Target.first.id, :action_type => "Out", :user_id => User.first.id, :amount => rand(item.amount))
+              :item_id => item.id, :target_id => Target.order("RANDOM()").first.id, :action_type => "Out", :user_id => item.category.user_id, :amount => rand(item.amount))
     end
   end
   end
