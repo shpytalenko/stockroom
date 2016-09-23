@@ -90,14 +90,20 @@ class TransactionsController < ApplicationController
     
     
   def count_target(transactions)
-    @targets ={}  
-    Target.find_each do |target|
-        total = 0 
-        total = transactions.where(:target_id => target.id, :action_type => "Out").sum(:amount)
-        @targets[target.id] = total
+    @users    ={}
+    targets  ={}  
+    User.find_each do |user|
+      Target.find_each do |target|
+          total = 0 
+          total = user.transactions.where(:target_id => target.id, :action_type => "Out").sum(:amount)
+          targets[target.id] = total
+      end  
+      max_target= targets.max_by{ |k,v| v }[1]
+      targets["max_target" => max_target]
+      @users["#{user.email}" => targets ]  
+      
     end  
-    @max_target= @targets.max_by{ |k,v| v }[1]
-    @targets
+    @users
   end
 
   
@@ -110,9 +116,9 @@ class TransactionsController < ApplicationController
          @total_transactions += 1 
          case t.action_type
           when "In"
-           @total_plus += t.amount.to_i    
+           @total_plus += t.cost    
           when "Out"
-           @total_minus += t.amount.to_i    
+           @total_minus += t.cost    
            #:@total_by_target += t.amount.to_i if t.
           end
       end  

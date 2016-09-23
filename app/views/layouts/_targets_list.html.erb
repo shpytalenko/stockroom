@@ -1,0 +1,16 @@
+Targets <%= @users.to_s %>
+<%- @users.each do |user| %>
+  <%= user[target.to_s] %>  
+<div class="panel panel-default">
+  <div class="panel-heading">Пункты: <%= user.email %>  </div>
+    <div class="panel-body">
+      <%- Target.find_each do |t| %>
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="<%= targets[t.id] %>" aria-valuemin="0" aria-valuemax="<%= max_target %>" style="min-width: <%=targets[t.id]%>%;">
+            <strong ><%= t.name %> <%= targets[t.id] %> грн. </strong> 
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>  

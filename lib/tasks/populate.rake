@@ -57,10 +57,13 @@ namespace :db do
          category.items << item
          item.save
          item.transactions.create(
-              :item_id => item.id, :action_type => "In", :user_id => item.category.user_id, :amount => item.amount)
+              :item_id => item.id, :action_type => "In", :user_id => item.category.user_id, :amount => item.amount, :cost => item.amount*item.price)
          
-         item.transactions.create(
+         transaction = item.transactions.create(
               :item_id => item.id, :target_id => Target.order("RANDOM()").first.id, :action_type => "Out", :user_id => item.category.user_id, :amount => rand(item.amount))
+         
+        transaction.cost = transaction.amount*item.price
+        transaction.save
     end
   end
   end
