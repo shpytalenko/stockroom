@@ -112,6 +112,7 @@ class TransactionsController < ApplicationController
       @total_by_target = 0
       @total_minus = 0
       @total_transactions = 0 
+      
       transactions.find_each do |t|
          @total_transactions += 1 
          case t.action_type
@@ -122,7 +123,6 @@ class TransactionsController < ApplicationController
            #:@total_by_target += t.amount.to_i if t.
           end
       end  
-
     end
     # Use callbacks to share common setup or constraints between actions.
     def set_transaction

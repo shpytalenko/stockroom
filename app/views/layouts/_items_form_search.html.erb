@@ -4,7 +4,7 @@
         <div class="panel-body">
          <%= ransack_simple_form_for @q , :html => { :class => 'form-vertical ' } do |f| %>
               <%= f.input  :category_id_eq ,:collection => Category.all, :label_method => :name, :value_method => :id, :label => "Категория" ,:include_blank => true %>
-              <%= f.input  :name_eq  , :label => "Наименование" ,:include_blank => true %>
+              <%= f.input  :name_cont  , :label => "Наименование" ,:include_blank => true %>
               <%= f.input  :description_cont  , :label => "Описание" ,:include_blank => true %>
               
               <%= f.input  :sku_cont  , :label => "SKU" ,:include_blank => true %>
