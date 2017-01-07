@@ -7,9 +7,9 @@ class TargetsController < ApplicationController
     #@targets = Target.all
     
     @q = Target.ransack(params[:q])
-    if params[:category_id] 
-      @q.category_id_eq = params[:category_id]
-    end
+    #if params[:category_id] 
+    #  @q.category_id_eq = params[:category_id]
+    #end
     @targets = @q.result
    
   end

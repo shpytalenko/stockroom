@@ -5,6 +5,12 @@ class CategoriesController < ApplicationController
   # GET /categories.json
   def index
     @categories = Category.all
+    
+    @q = Category.ransack(params[:q])
+   # if params[:category_id] 
+   #   @q.category_id_eq = params[:category_id]
+   # end
+    @categories = @q.result
   end
 
   # GET /categories/1

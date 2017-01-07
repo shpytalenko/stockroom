@@ -2,6 +2,23 @@
 <div class="page-header">
   <h3> Категории </h3>
 </div>
+
+<% content_for :sidebar do %>
+<div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">Поиск Категорий</div>
+        <div class="panel-body">
+         <%= ransack_simple_form_for @q , :html => { :class => 'form-vertical ' } do |f| %>
+              <%= f.input  :name_cont  , :label => "Наименование" ,:include_blank => true %>
+              <%= f.button :submit, "Поиск", :class => 'btn-primary btn-block' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+<% end %>
+
+
 <table class="table table-striped">
   <thead>
     <tr>
