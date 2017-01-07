@@ -4,12 +4,20 @@ class TargetsController < ApplicationController
   # GET /targets
   # GET /targets.json
   def index
-    @targets = Target.all
+    #@targets = Target.all
+    
+    @q = Target.ransack(params[:q])
+    if params[:category_id] 
+      @q.category_id_eq = params[:category_id]
+    end
+    @targets = @q.result
+   
   end
 
   # GET /targets/1
   # GET /targets/1.json
   def show
+    
   end
 
   # GET /targets/new
