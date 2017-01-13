@@ -1,3 +1,4 @@
+require 'open-uri'
 class PagesController < ApplicationController
   before_action :authenticate_user!, only: [
     :inside
@@ -5,11 +6,26 @@ class PagesController < ApplicationController
 
   def home
   end
-
-  def inside
+  
+  def report
+    @q = Transaction.ransack(params[:q])
+    @transactions  = @q.result
+    @transactions = @transactions.page(params[:page])
+    
+    #respond_to do |format|
+     # format.pdf { 
+        render_report(@transactions)
+      #}
+   # end
+    
   end
   
-def posts
+  def inside
+    
+  end
+  
+ 
+  def posts
     @posts = Post.published.page(params[:page]).per(10)
   end
 
@@ -43,4 +59,21 @@ def posts
     end
   end
 
+  private
+  def open_chart(*params)
+  end  
+  
+  def render_report(transactions)
+      report = ThinReports::Report.new layout: File.join(Rails.root, 'app', 'reports', 'test.tlf')
+            
+    report.start_new_page do
+     http://chart.apis.google.com/chart?cht=bhs&chs=200x125&chd=t:10,50,60,100,40&chco=4d89f9&chxt=x,y
+      item(:image).src( open('http://chart.apis.google.com/chart?' + URI.encode(['cht=bhs','chs=340x140','chco=4d89f9,c6d9fd','chd=t:10,50,60,80,40|50,60,100,40,20','chds=0,19','chxt=x,y','chxl=1:|Jan|Feb|Mar|Apr|May'].join('&')))
+)
+      #  item(:image).src(open("http://chart.apis.google.com/chart?cht=p3&chs=450x200&chd=t:2,4,3,1&chl=Phones|Computers|Services|Other&chtt=Company%20Sales&chco=ff0000"))
+      end
+      send_data report.generate, filename: 'tasks.pdf', 
+                                 type: 'application/pdf', 
+                                 disposition: 'attachment'
+    end
 end

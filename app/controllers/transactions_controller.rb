@@ -16,14 +16,33 @@ class TransactionsController < ApplicationController
       params[:q][:created_at_gteq] = params[:q][:created_at_gteq].to_date.beginning_of_day
     end  
     @q = Transaction.ransack(params[:q])
+     
+      if params[:item_id] 
+        @q.item_id_eq = params[:item_id]
+      end
+      if params[:target_id] 
+        @q.target_id_eq = params[:target_id]
+      end
+      
       @transactions  = @q.result
+     # binding.pry
       count_total_plus_and_minus(@transactions)
       count_target(@transactions)
+      calculate_stats(@transactions)
       @transactions = @transactions.page(params[:page])
     
   
   end
-
+  
+  def report_page
+    @q = Transaction.ransack(params[:q])
+    @transactions  = @q.result
+    count_total_plus_and_minus(@transactions)
+    count_target(@transactions)
+    calculate_stats(@transactions)
+    @transactions = @transactions.page(params[:page])
+  end
+  
   # GET /transactions/1
   # GET /transactions/1.json
   def show
@@ -107,7 +126,24 @@ class TransactionsController < ApplicationController
   end
 
   
-    def count_total_plus_and_minus(transactions)
+  def calculate_stats(transactions)
+    @report_by_target = {}
+    @report_by_category = {}
+    #Category.find_each do |category|
+    #  transactions.where(:target_id => target.id, :action_type => "Out")
+    #end
+    category_ids =[]
+    transactions.find_each do |transaction|
+     #@report_by_category[] 
+      category_ids << transaction.item.category_id
+    end    
+        
+    Target.find_each do |target|   
+      @report_by_target[target.name] = transactions.where(:target_id => target.id).sum(:cost)
+    end
+  end  
+  
+  def count_total_plus_and_minus(transactions)
       @total_plus = 0
       @total_by_target = 0
       @total_minus = 0
@@ -128,9 +164,14 @@ class TransactionsController < ApplicationController
     def set_transaction
       @transaction = Transaction.find(params[:id])
     end
-
+    
+    def render_report(transactions)
+        send_data Transaction.report(transactions).generate, filename: 'report.pdf',
+                               type: 'application/pdf',
+                               disposition: 'attachment'
+    end
     # Never trust parameters from the scary internet, only allow the white list through.
     def transaction_params
-      params.require(:transaction).permit(:item_id, :action_type, :amount, :target_id, :notes, :user_id)
+      params.require(:transaction).permit(:item_id, :action_type, :amount, :target_id, :notes, :user_id, :category_id)
     end
 end

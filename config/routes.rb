@@ -1,11 +1,16 @@
 Stockroom::Application.routes.draw do
   resources :categories
   resources :targets
-  resources :transactions
+  resources :transactions do
+    collection do
+      get 'report_page'
+    end
+  end
   resources :items
   root "items#index"
   get "home", to: "pages#home", as: "home"
   get "inside", to: "pages#inside", as: "inside"
+  get "report", to: "pages#report", as: "report"
   get "/contact", to: "pages#contact", as: "contact"
   post "/emailconfirmation", to: "pages#email", as: "email_confirmation"
 

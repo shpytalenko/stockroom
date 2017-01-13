@@ -1,0 +1,105 @@
+<% content_for :sidebar do %>
+ 
+  <div class="col-sm-12">
+  <div class="panel panel-default">
+    <div class="panel-heading">Параметры Отчета</div>
+    <div class="panel-body">
+        <%= ransack_simple_form_for @q, url: report_page_transactions_path , :html => { :class => 'form-vertical ' } do |f| %>
+           <h5><strong class="text-info">Отчетность за период:</strong></h5> 
+           <%= f.input  :created_at_gteq, as: :date,  :label => "От:" ,:include_blank => true, class: 'form-control  '%>
+            <%= f.input :created_at_lteq, as: :date,   :label => "До:" ,:include_blank => true, class: 'form-contol'  %>
+            <br/>
+        <%= f.button :submit, "Сгенерировать", :class => 'btn-primary btn-block' %>
+      <% end %>
+   
+    
+    </div>
+  </div>
+  </div>
+ 
+ 
+  <div class="col-sm-12">
+  <div class="panel panel-default">
+    <div class="panel-heading"> Общая статистика</div>
+    <div class="panel-body">
+       <dl class="dl-horizontal">
+              <dt><strong> Поступления:</strong></dt>
+              <dd><%= Transaction.total_in %> .грн</dd>
+              <dt><strong>Баланс склада:</strong></dt>
+              <dd><%= Item.sum(:total) %> .грн</dd>
+              <dt><strong>Расход:</strong></dt>
+              <dd><%= Transaction.total_out %> .грн</dd>
+              <hr>
+              <%- if Transaction.check_balance > 0 %>
+                <dt><strong>Избыток:</strong></dt>
+              <% else %>
+                <dt><strong>Недостача:</strong></dt>
+              <% end %>  
+              <dd><%= Transaction.check_balance %> .грн</dd>
+            </dl>
+
+    
+    </div>
+  </div>
+  </div>
+ 
+<% end %>
+
+
+<div class="col-sm-12">
+  <div class="panel panel-default">
+    <div class="panel-heading">Отчет</div>
+    <div class="panel-body">
+      
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading"> Склад </div>
+          <div class="panel-body">
+            <dl class="dl-horizontal">
+              <dt><strong>Поступления:</strong></dt>
+              <dd><%= @total_plus %> .грн</dd>
+              <dt><strong>Расход:</strong></dt>
+              <dd><%= @total_minus %> .грн</dd>
+              <dt><strong>Кол-во операций.:</strong></dt>
+              <dd><%= @total_transactions %></dd>
+            </dl>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">По станциям</div>
+          <div class="panel-body">
+            <dl class="dl-horizontal">
+              <%- @report_by_target.each do |key,value| %>
+              <dt><strong><%= key %>:</strong></dt>
+              <dd><%= value %> .грн</dd>
+              <% end %>
+            </dl>
+
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading"> По категориям </div>
+          <div class="panel-body">
+            <dl class="dl-horizontal">
+              <dt><strong>Поступления:</strong></dt>
+              <dd><%= @total_plus %> .грн</dd>
+              <dt><strong>Расход:</strong></dt>
+              <dd><%= @total_minus %> .грн</dd>
+              <dt><strong>Кол-во операций.:</strong></dt>
+              <dd><%= @total_transactions %></dd>
+            </dl>
+
+          </div>
+        </div>
+      </div>
+
+    
+    </div>
+  </div>
+  </div>

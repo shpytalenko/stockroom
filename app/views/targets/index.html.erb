@@ -14,6 +14,7 @@
   <thead>
     <tr>
       <th>Название</th>
+      <th>Total</th>
       <th></th>
     </tr>
   </thead>
@@ -21,9 +22,10 @@
     <% @targets.each do |target| %>
       <tr>
         <td><%= link_to target.name, target_path(target) %></td>
+        <td><%= target.transaction_cost %></td>
         <td>
-          <%= link_to "Детальней",
-                      target_path(target), :class => 'btn btn-default btn-xs' %>
+          <%= link_to "Транзакции",
+            transactions_path(:target_id=> target.id), :class => 'btn btn-default btn-xs' %>
           <%= link_to "Ред.",
                       edit_target_path(target), :class => 'btn btn-default btn-xs' %>
           <%= link_to "Удалить",

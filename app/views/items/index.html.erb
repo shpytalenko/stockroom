@@ -21,7 +21,7 @@
       <% @items.each do |item| %>
         <tr>
           <!--td><strong><%= link_to truncate("  #{item.category.name}", length: 27, separator: ' ') , item_path(item) %></td></strong--!>
-          <td><strong><%= link_to truncate("  #{item.name}", length: 35, separator: ' ') , item_path(item) %></td></strong>
+          <td><strong><%= link_to truncate("  #{item.name}", length: 35, separator: ' ') , transactions_path(:item_id => item.id) %></td></strong>
           <td><%= truncate("  #{item.description}", length: 17, separator: ' ')  %></td>
           <td><%= item.price %> грн  </td>
           <td>

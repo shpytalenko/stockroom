@@ -23,6 +23,7 @@ gem 'friendly_id', '5.1.0'
 # Font-awesome: https://github.com/FortAwesome/font-awesome-sass
 gem 'font-awesome-sass', '4.4.0'
 gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'thinreports-rails'
 gem 'simple_form'
 gem 'ransack', github: 'activerecord-hackery/ransack'
 gem 'ransack_simple_form'

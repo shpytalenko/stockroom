@@ -22,28 +22,31 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th># </th>
       <th>Назв. </th>
       <th>Описание </th>
-      <th></th>
+      <th>Количество ед. </th>
+      <th>Баланс</th>
     </tr>
   </thead>
   <tbody>
     <% @categories.each do |category| %>
       <tr>
-        <td><%= link_to category.id, category_path(category) %></td>
-        <td><%= category.name %></td>
+        <td><%= link_to category.name, items_path(:category_id => category.id) %></td>
         <td><%= category.description %></td>
+        <td><%= category.items_count %></td>
+        <td><%= category.total_cost %></td>
         <td>
           <%= link_to t('.show', :default => t("helpers.links.show")),
                       category_path(category), :class => 'btn btn-default btn-xs' %>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_category_path(category), :class => 'btn btn-default btn-xs' %>
+                      
+          
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       category_path(category),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                      :class => 'btn btn-xs btn-danger' %>
+                      :class => "btn btn-xs btn-danger  #{ 'disabled' if category.total_cost > 0}" %>
         </td>
       </tr>
     <% end %>

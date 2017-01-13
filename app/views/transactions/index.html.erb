@@ -85,6 +85,7 @@
         <%= ransack_simple_form_for @q , :html => { :class => 'form-vertical ' } do |f| %>
            <%= f.input  :target_id_eq ,:collection => Target.all, :label_method => :name, :value_method => :id, :label => "Станция" ,:include_blank => true %>
            <%= f.input  :item_category_id_eq ,:collection => Category.all, :label_method => :name, :value_method => :id, :label => "Категория" ,:include_blank => true %>
+           <%= f.input  :item_id_eq ,:collection => Item.all, :label_method => :name, :value_method => :id, :label => "Продукт" ,:include_blank => true %>
            <%= f.input  :user_id_eq ,:collection => User.all, :label_method => :email, :value_method => :id, :label => "Оператор" ,:include_blank => true %>
            <%#= f.input  :item_name_eq ,:collection => Account::CARD_TYPES,  :label => "Тип карты" ,:include_blank => true %>
            <%= f.input  :action_type_eq ,   :collection => ['In','Out'],  :label => "Тип Транзакции" ,:include_blank => true %>
@@ -119,6 +120,13 @@
           <dd><%= @total_minus %> .грн</dd>
           <dt><strong>Кол-во операций.:</strong></dt>
           <dd><%= @total_transactions %></dd>
+        </dl>
+        <strong>По станциям</strong>
+        <dl class="dl-horizontal">
+          <%- @report_by_target.each do |key,value| %>
+            <dt><strong><%= key %>:</strong></dt>
+            <dd><%= value %> .грн</dd>
+          <% end %>
         </dl>
       </div>
     </div>

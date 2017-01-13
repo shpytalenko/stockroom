@@ -1,0 +1,32 @@
+<% title("Отчет") %>
+<div class="col-sm-12">
+  <div class="panel panel-default">
+    <div class="panel-heading">Поиск по транзакциям</div>
+    <div class="panel-body">
+        <%= ransack_simple_form_for @q , :html => { :class => 'form-vertical ' } do |f| %>
+           <%= f.input  :target_id_eq ,:collection => Target.all, :label_method => :name, :value_method => :id, :label => "Станция" ,:include_blank => true %>
+           <%= f.input  :item_category_id_eq ,:collection => Category.all, :label_method => :name, :value_method => :id, :label => "Категория" ,:include_blank => true %>
+           <%= f.input  :item_id_eq ,:collection => Item.all, :label_method => :name, :value_method => :id, :label => "Продукт" ,:include_blank => true %>
+           <%= f.input  :user_id_eq ,:collection => User.all, :label_method => :email, :value_method => :id, :label => "Оператор" ,:include_blank => true %>
+           <%#= f.input  :item_name_eq ,:collection => Account::CARD_TYPES,  :label => "Тип карты" ,:include_blank => true %>
+           <%= f.input  :action_type_eq ,   :collection => ['In','Out'],  :label => "Тип Транзакции" ,:include_blank => true %>
+           <h5><strong class="text-info">Транзакции созданы в период:</strong></h5> 
+           <%= f.input  :created_at_gteq, as: :date,  :label => "От:" ,:include_blank => true, class: 'form-control  '%>
+            <%= f.input :created_at_lteq, as: :date,   :label => "До:" ,:include_blank => true, class: 'form-contol'  %>
+            <br/>
+            <div class="row">
+              <div class="col-md-6">
+                <%= f.input :cost_gteq , label: 'Сумма от'%>
+              </div>
+              <div class="col-md-6">
+                <%= f.input :cost_lteq , label: '- до'%>
+              </div>
+            </div>
+        <%= f.button :submit, "Поиск", :class => 'btn-primary btn-block' %>
+      <% end %>
+   
+    
+    </div>
+  </div>
+</div>
+
